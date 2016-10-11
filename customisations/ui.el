@@ -91,3 +91,10 @@
    (current-buffer)))
 
 (global-set-key (kbd "C-x w") 'toggle-window-dedicated)
+
+;; Switch between HiDPI and non HiDPI mode
+(defun toggle-hi-dpi-mode ()
+  (interactive)
+  (if (> 120 (face-attribute 'default :height (selected-frame)))
+    (set-face-attribute 'default (selected-frame) :height 120)
+    (set-face-attribute 'default (selected-frame) :height 93)))
