@@ -73,3 +73,4 @@
 (load "elisp-editing.el")
 (load "setup-clojure.el")
 (load "setup-js.el")
+(load "aws.el")
