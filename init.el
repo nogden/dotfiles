@@ -34,6 +34,7 @@
     company              ;; Auto-complete
     company-math         ;; Latex symbol completion
     flx-ido              ;; Better IDO matching
+    flymake-ruby         ;; Ruby syntax checking
     idea-darkula-theme
     ido-ubiquitous
     irfc
@@ -45,6 +46,7 @@
     paredit
     projectile
     rainbow-delimiters
+    robe                 ;; Ruby navigation
     smex                 ;; Filterable list of commands with M-x
     smart-mode-line
     smart-mode-line-powerline-theme
@@ -73,4 +75,5 @@
 (load "elisp-editing.el")
 (load "setup-clojure.el")
 (load "setup-js.el")
+(load "ruby.el")
 (load "aws.el")
