@@ -1,7 +1,7 @@
 ;; Emacs functions for interacting with AWS.
 
 (defvar aws-credentials-file "~/.aws/credentials")
-(defvar stscreds-executable "stscreds")
+(defvar stscreds-executable "~/.go/bin/stscreds")
 
 (defun read-lines (path)
   (with-temp-buffer

@@ -96,5 +96,5 @@
 (defun hidpi-mode ()
   (interactive)
   (if (> 120 (face-attribute 'default :height (selected-frame)))
-    (set-face-attribute 'default (selected-frame) :height 120)
+    (set-face-attribute 'default (selected-frame) :height 130)
     (set-face-attribute 'default (selected-frame) :height 93)))
