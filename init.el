@@ -37,7 +37,6 @@
     flymake-ruby         ;; Ruby syntax checking
     idea-darkula-theme
     ido-ubiquitous
-    irfc
     latex-extra
     magit                ;; Git integration
     magit-gh-pulls       ;; Github pull requests
