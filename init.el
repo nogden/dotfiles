@@ -27,6 +27,7 @@
 ;; Ensure these packages are installed by default.
 (defvar my-packages
   '(buffer-move
+    cargo                ;; Rust build integration
     cider
     clj-refactor
     clojure-mode
@@ -45,7 +46,7 @@
     paredit
     projectile
     rainbow-delimiters
-    robe                 ;; Ruby navigation
+    rust-mode
     smex                 ;; Filterable list of commands with M-x
     smart-mode-line
     smart-mode-line-powerline-theme
@@ -75,4 +76,5 @@
 (load "setup-clojure.el")
 (load "setup-js.el")
 (load "ruby.el")
+(load "setup-rust.el")
 (load "aws.el")
