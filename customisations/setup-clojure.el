@@ -65,7 +65,6 @@
 ;; Use clojure mode for other extensions
 (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
-(add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
 
 (add-hook 'cider-mode-hook
@@ -73,3 +72,8 @@
             (global-set-key (kbd "<f2>")     'cider-find-var)
             (global-set-key (kbd "<f1>")     'cider-pop-back)
             (global-set-key (kbd "C-c C-n")  'cider-eval-ns-form)))
+
+(setq cider-cljs-lein-repl
+	"(do (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))")
