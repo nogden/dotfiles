@@ -51,6 +51,7 @@
     smart-mode-line
     smart-mode-line-powerline-theme
     tagedit              ;; Edit html tags like sexps
+    toml-mode
     windmove))
 
 ;; Fix OS X weirdness when starting Emacs from a shell.
