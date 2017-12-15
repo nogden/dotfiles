@@ -1,0 +1,15 @@
+# Ignore everything
+*
+
+# Except for
+!.gitignore
+!.gitconfig
+
+!.emacs.d/init.el
+!.emacs.d/customisations/
+!.emacs.d/customisations/*
+
+!.tmux.conf
+!.vimrc
+!.yaourtrc
+!.zshrc
