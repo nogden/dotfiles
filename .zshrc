@@ -16,6 +16,13 @@ autoload -Uz promptinit
   promptinit
   prompt gitster
 
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/nick/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
 # Pager for yaourt search results
 export PAGER="less -R"
 
@@ -24,6 +31,9 @@ export EDITOR="vim"
 
 # Make sure txux starts in 256 colour mode
 export TERM="xterm-256color"
+
+# Initialise Ruby environment
+eval "$(rbenv init -)"
 
 # Command line emacs
 alias emacs="emacs -nw --no-desktop"
@@ -43,3 +53,15 @@ CARGO_PATH=~/.cargo/bin
 # Set up path variable
 # go bin directory for stscreds, perl bin directory for ack
 export PATH=$PATH:$CARGO_PATH
+
+# Use mycli instead of mysql
+alias mysql="mycli --auto-vertical-output"
+
+# Set a $GOPATH for the go package manager
+export GOPATH=~/.go
+
+# Set up path variable
+# go bin directory for stscreds, perl bin directory for ack
+export PATH=$PATH:$GOPATH/bin:/usr/bin/vendor_perl:~/.local/bin:~/Development/adr-tools/src
+
+eval "$(u --completion-script-zsh)"
