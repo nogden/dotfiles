@@ -60,8 +60,14 @@ alias mysql="mycli --auto-vertical-output"
 # Set a $GOPATH for the go package manager
 export GOPATH=~/.go
 
+# Tell racer where to find the rust source
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
+# Binaries installed by cargo live here
+CARGO_PATH=~/.cargo/bin
+
 # Set up path variable
 # go bin directory for stscreds, perl bin directory for ack
-export PATH=$PATH:$GOPATH/bin:/usr/bin/vendor_perl:~/.local/bin:~/Development/adr-tools/src
+export PATH=$PATH:$CARGO_PATH:$GOPATH/bin:/usr/bin/vendor_perl:~/.local/bin:~/Development/adr-tools/src
 
 eval "$(u --completion-script-zsh)"
