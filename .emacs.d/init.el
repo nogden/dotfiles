@@ -45,6 +45,7 @@
     org
     paredit
     projectile
+    racer
     rainbow-delimiters
     rust-mode
     smex                 ;; Filterable list of commands with M-x
