@@ -1,0 +1,21 @@
+[user]
+	name = Nick Ogden
+	email = nick@nickogden.org
+[push]
+	default = simple
+[alias]
+	dag = log --graph --decorate --all
+	pr = !hub pull-request
+	co = checkout
+[core]
+	excludesfile = ~/.config/git/gitignore
+[github]
+	user = nogden
+	password = acgit-2_25
+	oauth-token = 39e5fee9d87333048b143f6c84a10e7fd32ef7cc
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+[credential]
+	helper = libsecret
