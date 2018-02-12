@@ -71,3 +71,5 @@ CARGO_PATH=~/.cargo/bin
 export PATH=$PATH:$CARGO_PATH:$GOPATH/bin:/usr/bin/vendor_perl:~/.local/bin:~/Development/adr-tools/src
 
 eval "$(u --completion-script-zsh)"
+
+alias kbo="kubectl --namespace=energy-back-office"
