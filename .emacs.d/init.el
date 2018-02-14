@@ -80,3 +80,4 @@
 (load "ruby.el")
 (load "setup-rust.el")
 (load "aws.el")
+(put 'upcase-region 'disabled nil)

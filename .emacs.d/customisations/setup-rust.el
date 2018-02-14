@@ -4,7 +4,8 @@
 ;; Run rustfmt on C-<tab>
 (add-hook 'rust-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)))
+            (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)
+            (local-set-key (kbd "C-;") #'comment-line)))
 
 ;; Enable racer autocomplete
 (add-hook 'rust-mode-hook #'racer-mode)
