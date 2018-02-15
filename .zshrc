@@ -72,4 +72,4 @@ export PATH=$PATH:$CARGO_PATH:$GOPATH/bin:/usr/bin/vendor_perl:~/.local/bin:~/De
 
 eval "$(u --completion-script-zsh)"
 
-alias kbo="kubectl --namespace=energy-back-office"
+alias k8s=kubectl
