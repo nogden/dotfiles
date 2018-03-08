@@ -31,6 +31,9 @@ alias emacs="emacs -nw --no-desktop"
 # Tunneling proxy
 alias proxy_tunnel="ssh -C2qTnN -D"
 
+# Make watch work with aliases
+alias watch="watch "
+
 # Tell racer where to find the rust source
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
