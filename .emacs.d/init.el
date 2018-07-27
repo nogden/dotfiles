@@ -37,7 +37,7 @@
     flx-ido              ;; Better IDO matching
     flymake-ruby         ;; Ruby syntax checking
     idea-darkula-theme
-    ido-ubiquitous
+    ido-completing-read+
     latex-extra
     magit                ;; Git integration
     magit-gh-pulls       ;; Github pull requests

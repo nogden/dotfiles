@@ -27,6 +27,7 @@
 ;; you've typed in
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (ido-mode t)
+(ido-everywhere 1)
 
 ;; This allows partial matches, e.g. "tl" will match "Tyrion Lannister"
 (setq ido-enable-flex-matching t)
@@ -44,6 +45,7 @@
 
 ;; This enables ido in all contexts where it could be useful, not just
 ;; for selecting buffer and file names
+(require 'ido-completing-read+)
 (ido-ubiquitous-mode 1)
 
 ;; Shows a list of buffers
