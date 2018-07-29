@@ -16,6 +16,9 @@ autoload -Uz promptinit
   promptinit
   prompt gitster
 
+# hack for improving vbox rendering
+export LD_PRELOAD=/usr/lib64/VBoxOGL.so
+  
 # Pager for yaourt search results
 export PAGER="less -R"
 
