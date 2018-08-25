@@ -5,9 +5,6 @@
 ;; Enable paredit for Clojure
 (add-hook 'clojure-mode-hook 'enable-paredit-mode)
 
-;; Show documentation in status bar
-(add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
-
 ;; This is useful for working with camel-case tokens, like names of
 ;; Java classes (e.g. JavaClassName)
 (add-hook 'clojure-mode-hook 'subword-mode)
@@ -37,11 +34,13 @@
             (yas-minor-mode 1)
             (cljr-add-keybindings-with-prefix "C-c r")))
 
+;; REPL
+
 ;; Disable help banner on repl start-up.
 (setq cider-repl-display-help-banner nil)
 
-;; go right to the REPL buffer when it's finished connecting
-;; (setq cider-repl-pop-to-buffer-on-connect t)
+;; Show repl when connected, but don't focus it
+(setq cider-repl-pop-to-buffer-on-connect 'display-only)
 
 ;; When there's a cider error, show its buffer and switch to it
 (setq cider-show-error-buffer t)
@@ -66,6 +65,11 @@
 (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
+
+
+;; Cider in source files
+;; Show documentation in status bar
+(add-hook 'cider-mode-hook #'eldoc-mode)
 
 (add-hook 'cider-mode-hook
           (lambda ()
