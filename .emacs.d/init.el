@@ -36,6 +36,7 @@
     company-math         ;; Latex symbol completion
     flx-ido              ;; Better IDO matching
     flymake-ruby         ;; Ruby syntax checking
+    highlight-thing      ;; Highlight matching symbols under point
     idea-darkula-theme
     ido-completing-read+
     latex-extra

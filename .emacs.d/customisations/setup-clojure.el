@@ -71,6 +71,10 @@
 ;; Show documentation in status bar
 (add-hook 'cider-mode-hook #'eldoc-mode)
 
+;; Highlight matching symbols under point
+(add-hook 'clojure-mode-hook 'highlight-thing-mode)
+
+;; Navigation shortcuts
 (add-hook 'cider-mode-hook
           (lambda ()
             (global-set-key (kbd "<f2>")     'cider-find-var)

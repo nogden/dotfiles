@@ -79,3 +79,9 @@
 ;; Enable emmet-mode for all markup and css
 (add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook 'emmet-mode)
+
+;; Hightlight thing under point
+(require 'highlight-thing)
+
+(setq highlight-thing-delay-seconds 0.1)
+(setq highlight-thing-case-sensitive-p t)
