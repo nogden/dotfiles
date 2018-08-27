@@ -44,12 +44,16 @@
 
 ;; projectile everywhere!
 (projectile-global-mode)
+(counsel-projectile-mode)
+
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+;; Use counsel-projectile's ripgrep and git search easily
+(global-set-key (kbd "C-x f") 'counsel-projectile-rg)
+(global-set-key (kbd "C-x C-g f") 'counsel-git-grep)
 
 ;; Neotree setup
 (global-set-key (kbd "C-x t") 'neotree-toggle)
 
 ;; Show Magit status buffer
 (global-set-key (kbd "C-x g") 'magit-status)
-
-;; Easy rgrep access
-(global-set-key (kbd "C-x f") 'rgrep)

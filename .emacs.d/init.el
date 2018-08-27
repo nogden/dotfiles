@@ -35,6 +35,7 @@
     company              ;; Auto-complete
     company-math         ;; Latex symbol completion
     counsel              ;; Popup interface and swiper searching
+    counsel-projectile
     highlight-thing      ;; Highlight matching symbols under point
     idea-darkula-theme
     latex-extra
