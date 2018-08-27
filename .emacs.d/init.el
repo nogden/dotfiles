@@ -34,11 +34,9 @@
     clojure-mode-extra-font-locking
     company              ;; Auto-complete
     company-math         ;; Latex symbol completion
-    flx-ido              ;; Better IDO matching
-    flymake-ruby         ;; Ruby syntax checking
+    counsel              ;; Popup interface and swiper searching
     highlight-thing      ;; Highlight matching symbols under point
     idea-darkula-theme
-    ido-completing-read+
     latex-extra
     magit                ;; Git integration
     magit-gh-pulls       ;; Github pull requests
@@ -49,7 +47,6 @@
     racer
     rainbow-delimiters
     rust-mode
-    smex                 ;; Filterable list of commands with M-x
     smart-mode-line
     smart-mode-line-powerline-theme
     tagedit              ;; Edit html tags like sexps
