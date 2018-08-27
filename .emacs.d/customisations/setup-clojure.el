@@ -32,7 +32,7 @@
           (lambda ()
             (clj-refactor-mode 1)
             (yas-minor-mode 1)
-            (cljr-add-keybindings-with-prefix "C-c r")))
+            (local-set-key (kbd "C-c r") 'hydra-cljr-help-menu/body)))
 
 ;; REPL
 
