@@ -26,6 +26,7 @@
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 (setq ivy-extra-directories nil)
+(global-set-key (kbd "M-x") 'counsel-M-x)
 
 ;; Use C-j for immediate termination with the current value, RET
 ;; for continuing completion for that directory, This is the ido

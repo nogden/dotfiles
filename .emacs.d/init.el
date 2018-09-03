@@ -50,6 +50,7 @@
     rust-mode
     smart-mode-line
     smart-mode-line-powerline-theme
+    smex                 ;; Show the most recent commands first
     tagedit              ;; Edit html tags like sexps
     toml-mode
     windmove))
