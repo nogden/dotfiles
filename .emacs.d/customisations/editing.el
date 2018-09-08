@@ -45,8 +45,11 @@
 ;; comments
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
-;; yay rainbows!
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+;; Rainbow delimiters and an 80 chgaracter fill for programming.
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (rainbow-delimiters-mode)
+            (setq fill-column 80)))
 
 ;; use 2 spaces for tabs
 (defun die-tabs ()
