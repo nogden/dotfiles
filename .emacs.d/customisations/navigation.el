@@ -34,6 +34,10 @@
 (define-key ivy-minibuffer-map (kbd "C-j") #'ivy-immediate-done)
 (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
 
+;; Use fuzzy matching globally
+(setq ivy-re-builders-alist
+      '((t . ivy--regex-fuzzy)))
+
 ;; Search with swiper by default
 (global-set-key (kbd "C-s") 'swiper)
 
