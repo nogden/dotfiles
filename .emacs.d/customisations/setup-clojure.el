@@ -66,6 +66,8 @@
 (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
 
+;; Launch REPL with the dev alias by default for deps.edn
+(setq cider-clojure-cli-global-options "-A:dev")
 
 ;; Cider in source files
 ;; Show documentation in status bar
