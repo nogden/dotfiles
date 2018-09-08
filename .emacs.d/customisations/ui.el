@@ -13,10 +13,15 @@
 (scroll-bar-mode -1)
 (horizontal-scroll-bar-mode -1)
 
-;; Show line numbers in programming modes
+;; Show line numbers  and the 80 character guide line in programming
+;; modes
+(require 'fill-column-indicator)
+(setq fci-rule-column 80)
+(setq fci-rule-color "gray28")
 (add-hook 'prog-mode-hook
           (lambda ()
-            (linum-mode 1)))
+            (linum-mode 1)
+            (fci-mode)))
 
 ;; A better modeline
 (require 'smart-mode-line)
@@ -91,6 +96,13 @@
    (current-buffer)))
 
 (global-set-key (kbd "C-x w") 'toggle-window-dedicated)
+
+;; Make C-x +/-/0 zoom frames, no t buffers
+(require 'zoom-frm)
+(define-key ctl-x-map [(control ?+)] 'zoom-in/out)
+(define-key ctl-x-map [(control ?-)] 'zoom-in/out)
+(define-key ctl-x-map [(control ?=)] 'zoom-in/out)
+(define-key ctl-x-map [(control ?0)] 'zoom-in/out)
 
 ;; Switch between HiDPI and non HiDPI mode
 (defun hidpi-mode ()

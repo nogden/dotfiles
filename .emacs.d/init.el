@@ -27,20 +27,21 @@
 ;; Ensure these packages are installed by default.
 (defvar my-packages
   '(buffer-move
-    cargo                ;; Rust build integration
+    cargo                 ;; Rust build integration
     cider
     clj-refactor
     clojure-mode
     clojure-mode-extra-font-locking
-    company              ;; Auto-complete
-    company-math         ;; Latex symbol completion
-    counsel              ;; Popup interface and swiper searching
+    company               ;; Auto-complete
+    company-math          ;; Latex symbol completion
+    counsel               ;; Popup interface and swiper searching
     counsel-projectile
-    highlight-thing      ;; Highlight matching symbols under point
+    fill-column-indicator ;; 80 character line
+    highlight-thing       ;; Highlight matching symbols under point
     idea-darkula-theme
     latex-extra
-    magit                ;; Git integration
-    magit-gh-pulls       ;; Github pull requests
+    magit                 ;; Git integration
+    magit-gh-pulls        ;; Github pull requests
     neotree
     org
     paredit
@@ -50,8 +51,8 @@
     rust-mode
     smart-mode-line
     smart-mode-line-powerline-theme
-    smex                 ;; Show the most recent commands first
-    tagedit              ;; Edit html tags like sexps
+    smex                  ;; Show the most recent commands first
+    tagedit               ;; Edit html tags like sexps
     toml-mode
     windmove))
 
