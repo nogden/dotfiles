@@ -34,6 +34,8 @@
             (yas-minor-mode 1)
             (cljr-add-keybindings-with-prefix "C-c C-r")))
 
+(setq cljr-clojure-test-declaration "[clojure.test :refer :all]")
+
 ;; REPL
 
 ;; Disable help banner on repl start-up.
