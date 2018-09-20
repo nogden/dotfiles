@@ -78,6 +78,7 @@
 
 ;; Hightlight thing under point
 (require 'highlight-thing)
-
 (setq highlight-thing-delay-seconds 0.1)
 (setq highlight-thing-case-sensitive-p t)
+(custom-set-faces   ;; In a subtle gray
+ '(hi-yellow ((t (:background "gray28")))))
