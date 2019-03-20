@@ -20,3 +20,9 @@
 
 ;; Enable cargo mode in rust mode
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
+
+;; lsp setup
+(add-hook 'rust-mode-hook #'lsp)
+
+(require 'company-lsp)
+(push 'company-lsp company-backends)

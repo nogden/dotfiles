@@ -33,6 +33,7 @@
     clojure-mode
     clojure-mode-extra-font-locking
     company               ;; Auto-complete
+    company-lsp
     company-math          ;; Latex symbol completion
     counsel               ;; Popup interface and swiper searching
     counsel-projectile
@@ -40,6 +41,7 @@
     highlight-thing       ;; Highlight matching symbols under point
     idea-darkula-theme
     latex-extra
+    lsp-mode
     magit                 ;; Git integration
     magit-gh-pulls        ;; Github pull requests
     neotree
