@@ -37,3 +37,6 @@
 
 ;; Control Spotify easily
 (global-set-key (kbd "C-x p") 'spotify-playpause)
+
+;; Use luaTeX as LaTeX engine
+(setq-default TeX-engine 'luatex)
