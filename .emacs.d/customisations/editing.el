@@ -1,84 +1,51 @@
 ;; Customizations relating to editing a buffer.
 
-;; Key binding to use "hippie expand" for text autocompletion
-;; http://www.emacswiki.org/emacs/HippieExpand
-(global-set-key (kbd "M-/") 'hippie-expand)
+;; Clipboard and mouse interactions
+(setq x-select-enable-clipboard           t
+      x-select-enable-primary             t
+      save-interprogram-paste-before-kill t  ;; Don't loose clipboard on yank
+      apropos-do-all                      t
+      mouse-yank-at-point                 t)
 
-;; Lisp-friendly hippie expand
-(setq hippie-expand-try-functions-list
-      '(try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
+(delete-selection-mode 1)               ;; Overwrite selected text when typing.
+(setq-default indent-tabs-mode nil)     ;; Don't use hard tabs
+(add-hook 'before-save-hook
+          'delete-trailing-whitespace)  ;; Delete trailing whitespace on save
+(setq electric-indent-mode 1)           ;; Enter performs auto-indent
+(setq-default sh-basic-offset 2)
+(setq-default sh-indentation  2)
 
-;; Highlights matching parenthesis
-(show-paren-mode 1)
-
-;; Highlight current line
-(global-hl-line-mode 1)
-
-;; Overwrite selected text when typing.
-(delete-selection-mode 1)
-
-;; Don't use hard tabs
-(setq-default indent-tabs-mode nil)
-
-;; When you visit a file, point goes to the last place where it
-;; was when you previously visited the same file.
-;; http://www.emacswiki.org/emacs/SavePlace
-(require 'saveplace)
-(setq-default save-place t)
-;; keep track of saved places in ~/.emacs.d/places
-(setq save-place-file (concat user-emacs-directory "places"))
-
-;; Emacs can automatically create backup files. This tells Emacs to
-;; put all backups in ~/.emacs.d/backups. More info:
-;; http://www.gnu.org/software/emacs/manual/html_node/elisp/Backup-Files.html
-(setq backup-directory-alist `(("." . ,(concat user-emacs-directory
-                                               "backups"))))
+;; Put backups in ~/.emacs.d/backups.
+(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
 (setq auto-save-default nil)
+(setq create-lockfiles nil)             ;; Turn off ~ files
+(global-auto-revert-mode t)             ;; Reload buffers that change on disk
 
-;; Delete trailing whitespace on save.
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; Key bindings
+(global-set-key (kbd "C-;") 'comment-or-uncomment-region)  ;; Comments
 
-;; comments
-(global-set-key (kbd "C-;") 'comment-or-uncomment-region)
+(desktop-save-mode 1)
 
-;; Rainbow delimiters and an 80 chgaracter fill for programming.
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (rainbow-delimiters-mode)
-            (setq fill-column 80)))
+;; Easy switching to recently edited files
+(use-package recentf
+  :init
+  (setq recentf-save-file      (concat user-emacs-directory ".recentf")
+        recentf-max-menu-items 40)
+  :config
+  (recentf-mode 1))
 
-;; use 2 spaces for tabs
-(defun die-tabs ()
+;; Return in a buffer to where we left off
+(use-package saveplace
+  :config
+  (setq-default save-place t)
+  ;; keep track of saved places in ~/.emacs.d/places
+  (setq save-place-file (concat user-emacs-directory "places")))
+
+;; Use 2 spaces for tabs
+(defun tabs-2-spaces ()
+  "Replace all tabs in the buffer with two spaces."
   (interactive)
   (set-variable 'tab-width 2)
   (mark-whole-buffer)
   (untabify (region-beginning) (region-end))
   (keyboard-quit))
-
-;; fix weird os x kill error
-(defun ns-get-pasteboard ()
-  "Returns the value of the pasteboard, or nil for unsupported formats."
-  (condition-case nil
-      (ns-get-selection-internal 'CLIPBOARD)
-    (quit nil)))
-
-;; Enter causes auto-indent
-(setq electric-indent-mode 1)
-
-;; Use company to provide auto-complete popups
-(global-company-mode)
-
-;; Enable emmet-mode for all markup and css
-(add-hook 'sgml-mode-hook 'emmet-mode)
-(add-hook 'css-mode-hook 'emmet-mode)
-
-;; Hightlight thing under point
-(require 'highlight-thing)
-(setq highlight-thing-delay-seconds 0.1)
-(setq highlight-thing-case-sensitive-p t)
-(custom-set-faces   ;; In a subtle gray
- '(hi-yellow ((t (:background "gray28")))))

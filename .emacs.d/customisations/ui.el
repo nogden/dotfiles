@@ -1,87 +1,109 @@
-;; These customizations change the way emacs looks and disable/enable
-;; some user interface elements. Some useful customizations are
-;; commented out, and begin with the line "CUSTOMIZE". These are more
-;; a matter of preference and may require some fiddling to match your
-;; preferences
-
-;; Turn off the menu bar and tool bar at the top of each frame because
-;; it's distracting
+;; Get rid of all distractions so we can focus on code
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-
-;; No scroll bars
 (scroll-bar-mode -1)
 (horizontal-scroll-bar-mode -1)
-
-;; Show line numbers  and the 80 character guide line in programming
-;; modes
-(require 'fill-column-indicator)
-(setq fci-rule-column 80)
-(setq fci-rule-color "gray28")
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (linum-mode 1)
-            (fci-mode)))
-
-;; A better modeline
-(require 'smart-mode-line)
-(sml/setup)
-(sml/apply-theme 'respectful)
-
-;; Color Themes
-;; Read http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/
-;; for a great explanation of emacs color themes.
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html
-;; for a more technical explanation.
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'idea-darkula t)
-
-;; Uncomment the lines below by removing semicolons and play with the
-;; values in order to set the width (in characters wide) and height
-;; (in lines high) Emacs will have whenever you start it
-;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 177) (height . 53)))
-
-;; These settings relate to how emacs interacts with your operating system
-(setq ;; makes killing/yanking interact with the clipboard
-      x-select-enable-clipboard t
-
-      ;; I'm actually not sure what this does but it's recommended?
-      x-select-enable-primary t
-
-      ;; Save clipboard strings into kill ring before replacing them.
-      ;; When one selects something in another program to paste it into Emacs,
-      ;; but kills something in Emacs before actually pasting it,
-      ;; this selection is gone unless this variable is non-nil
-      save-interprogram-paste-before-kill t
-
-      ;; Shows all options when running apropos. For more info,
-      ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Apropos.html
-      apropos-do-all t
-
-      ;; Mouse yank commands yank at point instead of at click.
-      mouse-yank-at-point t)
-
-;; I-beam cursor instead of block
-(setq-default cursor-type 'bar)
-
-;; No cursor blinking, it's distracting
-(blink-cursor-mode 0)
-
-;; full path in title bar
-(setq-default frame-title-format "%b (%f)")
-
-;; don't pop up font menu
-(global-set-key (kbd "s-t") '(lambda () (interactive)))
-
-;; no bell
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
+(setq initial-scratch-message "Hi Nick. What will you create today?")
+(setq-default frame-title-format "%b (%f)")  ;; Show full file path in titlebar
+(fset 'yes-or-no-p 'y-or-n-p)                ;; Y or N to answer questions
 
-;; Truncate long lines rather than wrapping
-(set-default 'truncate-lines t)
+;; Use UTF-8 everywhere
+(setq coding-system-for-read 'utf-8)
+(setq coding-system-for-write 'utf-8)
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8-unix)
+(setq-default buffer-file-coding-system 'utf-8-unix)
+(setq-default default-buffer-file-coding-system 'utf-8-unix)
+(prefer-coding-system 'utf-8-unix)
+(when (eq system-type 'windows-nt)  ;; Interop with windows clipboard
+  (set-clipboard-coding-system 'utf-16le-dos))
 
-;; Show column number in modeline
-(setq column-number-mode t)
+;; Text
+(setq-default cursor-type 'bar)
+(blink-cursor-mode 0)
+(set-default 'truncate-lines t)  ;; Don't line wrap
+(show-paren-mode 1)              ;; Highlight matching parenthesis
+(global-hl-line-mode 1)          ;; Highlight current line
+
+;; Make identical buffer names unique
+(use-package uniquify
+  :ensure nil
+  :init
+  (setq uniquify-buffer-name-style 'forward))
+
+;; Load theme
+(use-package idea-darkula-theme
+  :init
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+  (add-to-list 'load-path "~/.emacs.d/themes")
+  (load-theme 'idea-darkula t))
+
+(use-package ivy
+  :bind (:map ivy-minibuffer-map
+         ("C-j" . ivy-immediate-done)
+         ("RET" . ivy-alt-done))
+  :init
+  (ivy-mode 1)           ;; Use globally at startup
+  :config
+  (setq ivy-use-virtual-buffers t
+        ivy-height 15
+        ivy-count-format "(%d/%d) "
+        ivy-extra-directories nil
+        ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+  :delight)
+
+(use-package counsel
+  :bind* (("M-x"       . counsel-M-x)
+          ("C-s"       . swiper)
+          ("C-x f"     . counsel-projectile-rg)
+          ("C-x C-f"   . counsel-find-file)
+          ("C-x C-g f" . counsel-git-grep)
+          ("C-c g"     . counsel-git)
+          ("C-c l"     . counsel-locate)
+          ("C-c C-f"   . counsel-find-file)))
+
+(use-package smart-mode-line
+  :init
+  (sml/setup)
+  (sml/apply-theme 'respectful)
+  :config
+  (setq column-number-mode t))
+
+(use-package company
+  :config (global-company-mode))
+
+(use-package windmove
+  :config                   ;; Allow navigating between splits with super key
+  (windmove-default-keybindings 'super))
+
+;; Easy buffer movement
+(use-package buffer-move
+  :bind (("<C-s-up>"    . buf-move-up)
+         ("<C-s-down>"  . buf-move-down)
+         ("<C-s-left>"  . buf-move-left)
+         ("<C-s-right>" . buf-move-right)))
+
+(use-package ibuffer
+  :bind (("C-x C-b" . ibuffer)))
+
+(use-package neotree
+  :commands neotree-toggle
+  :bind ("C-x t" . neotree-toggle))
+
+;; Make C-x +/-/0 zoom frames, not buffers
+(use-package zoom-frm
+  :ensure nil
+  :bind (:map ctl-x-map
+         ([(control ?+)] . zoom-in/out)
+         ([(control ?-)] . zoom-in/out)
+         ([(control ?=)] . zoom-in/out)
+         ([(control ?0)] . zoom-in/out)))
 
 ;; A function for dedicating windows to buffers
 (defun toggle-window-dedicated ()
@@ -96,13 +118,6 @@
    (current-buffer)))
 
 (global-set-key (kbd "C-x w") 'toggle-window-dedicated)
-
-;; Make C-x +/-/0 zoom frames, no t buffers
-(require 'zoom-frm)
-(define-key ctl-x-map [(control ?+)] 'zoom-in/out)
-(define-key ctl-x-map [(control ?-)] 'zoom-in/out)
-(define-key ctl-x-map [(control ?=)] 'zoom-in/out)
-(define-key ctl-x-map [(control ?0)] 'zoom-in/out)
 
 ;; Switch between HiDPI and non HiDPI mode
 (defun hidpi-mode ()
