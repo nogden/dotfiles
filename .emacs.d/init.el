@@ -2,28 +2,23 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;; Define package repositories
-(require 'package)
-(setq package-enable-at-startup nil) ; Wait until we setup use-package
+;; Setup straight package management
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(setq package-archives
-      '(("gnu"          . "http://elpa.gnu.org/packages/")
-        ("marmalade"    . "http://marmalade-repo.org/packages/")
-;;      ("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("melpa"        . "https://melpa.org/packages/")))
-
-;; Load and activate emacs packages. Do this first so that the
-;; packages are loaded before you start trying to modify them.
-;; This also sets the load path.
-(package-initialize)
-
-;; Bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)  ;; Install packages if needed
+;; Use straight package management from use-package
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; Ensure we have the same env vars as the shell in OS X
 (use-package exec-path-from-shell
@@ -32,9 +27,6 @@
   (exec-path-from-shell-initialize)
   (exec-path-from-shell-copy-envs
    '("PATH")))
-
-;; Load manual elisp files from the vendor directory
-(add-to-list 'load-path "~/.emacs.d/vendor")
 
 ;; Find further customisations
 (add-to-list 'load-path "~/.emacs.d/customisations")

@@ -11,8 +11,6 @@
 (fset 'yes-or-no-p 'y-or-n-p)                ;; Y or N to answer questions
 
 ;; Use UTF-8 everywhere
-(setq coding-system-for-read 'utf-8)
-(setq coding-system-for-write 'utf-8)
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
@@ -32,10 +30,7 @@
 (global-hl-line-mode 1)          ;; Highlight current line
 
 ;; Make identical buffer names unique
-(use-package uniquify
-  :ensure nil
-  :init
-  (setq uniquify-buffer-name-style 'forward))
+(setq uniquify-buffer-name-style 'forward)
 
 ;; Load theme
 (use-package idea-darkula-theme
@@ -98,7 +93,6 @@
 
 ;; Make C-x +/-/0 zoom frames, not buffers
 (use-package zoom-frm
-  :ensure nil
   :bind (:map ctl-x-map
          ([(control ?+)] . zoom-in/out)
          ([(control ?-)] . zoom-in/out)
