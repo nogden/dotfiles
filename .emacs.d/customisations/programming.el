@@ -64,11 +64,19 @@
 
 ;; LSP support
 (use-package lsp-mode
-  :hook rust-mode)
+  :hook (rust-mode c-mode c++-mode)
+  :commands lsp)
 
 (use-package company-lsp
+  :commands company-lsp
   :init
   (push 'company-lsp company-backends))
+
+;; C / C++
+(use-package c++-mode
+  :straight nil
+  :bind (:map c++-mode-map
+         ("C-c c" . run-build-script)))
 
 ;; Debugging support
 (use-package gdb-mi
@@ -76,3 +84,10 @@
   :init
   (fmakunbound 'gdb)
   (fmakunbound 'gdb-enable-debug))
+
+;; Handmade hero build script
+(defun run-build-script ()
+  (interactive)
+  (compile (concat (file-name-as-directory (projectile-project-root))
+                   "build.sh"))
+  (other-window 1))
