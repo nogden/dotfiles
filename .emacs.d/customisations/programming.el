@@ -65,18 +65,22 @@
 ;; LSP support
 (use-package lsp-mode
   :hook (rust-mode c-mode c++-mode)
-  :commands lsp)
+  :commands lsp
+  :bind (("C-c M-j" . lsp)))
 
 (use-package company-lsp
+  :after lsp-mode
   :commands company-lsp
   :init
   (push 'company-lsp company-backends))
 
 ;; C / C++
-(use-package c++-mode
+(use-package cc-mode
   :straight nil
   :bind (:map c++-mode-map
-         ("C-c c" . run-build-script)))
+         ("C-c C-c" . run-build-script)
+         ("<f2>"    . lsp-find-definition)
+         ("<f1>"    . pop-tag-mark)))
 
 ;; Debugging support
 (use-package gdb-mi
@@ -85,9 +89,24 @@
   (fmakunbound 'gdb)
   (fmakunbound 'gdb-enable-debug))
 
+(defun file-search-upward (directory file)
+  "Search DIRECTORY for FILE and return its full path if found, or NIL if not.
+
+   If FILE is not found in DIRECTORY, the parent of DIRECTORY will be searched."
+  (let ((parent-dir (file-truename (concat (file-name-directory directory) "../")))
+        (current-path (if (not (string= (substring directory (- (length directory) 1)) "/"))
+                          (concat directory "/" file)
+                        (concat directory file))))
+    (if (file-exists-p current-path)
+        current-path
+      (when (and (not (string= (file-truename directory) parent-dir))
+                 (< (length parent-dir) (length (file-truename directory))))
+        (file-search-upward parent-dir file)))))
+
 ;; Handmade hero build script
 (defun run-build-script ()
   (interactive)
-  (compile (concat (file-name-as-directory (projectile-project-root))
-                   "build.sh"))
+  (let* ((build-script      (file-search-upward "." "build.sh"))
+         (default-directory (file-name-directory build-script)))
+    (compile build-script))
   (other-window 1))
