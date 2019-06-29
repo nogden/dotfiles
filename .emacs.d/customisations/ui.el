@@ -87,9 +87,15 @@
 (use-package ibuffer
   :bind (("C-x C-b" . ibuffer)))
 
-(use-package neotree
-  :commands neotree-toggle
-  :bind ("C-x t" . neotree-toggle))
+(use-package treemacs
+  :commands treemacs
+  :bind ("C-x t" . treemacs))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
+(use-package treemacs-magit
+  :after (treemacs magit))
 
 ;; Make C-x +/-/0 zoom frames, not buffers
 (use-package zoom-frm
