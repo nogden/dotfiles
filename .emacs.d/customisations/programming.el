@@ -2,8 +2,8 @@
 
 ;; Show line numbers and the 80 character line when programming
 (use-package fill-column-indicator
-  :hook ((prog-mode . fci-mode)
-         (prog-mode . linum-mode))
+  :hook (prog-mode . fci-mode)
+        (prog-mode . display-line-numbers-mode)
   :config
   (setq fci-rule-column 80)
   (setq fci-rule-color "gray28"))
@@ -56,6 +56,10 @@
           clojure-repl-mode
           cider-repl-mode) . paredit-mode))
 
+(use-package flycheck
+  :init
+  (global-flycheck-mode))
+
 ;; LaTeX
 (setq-default TeX-engine 'luatex)
 
@@ -80,7 +84,8 @@
   :bind (:map c++-mode-map
          ("C-c C-c" . run-build-script)
          ("<f2>"    . lsp-find-definition)
-         ("<f1>"    . pop-tag-mark)))
+         ("<f1>"    . pop-tag-mark)
+         ("C-r"     . query-replace)))
 
 ;; Debugging support
 (use-package gdb-mi
