@@ -32,6 +32,19 @@
 ;; Make identical buffer names unique
 (setq uniquify-buffer-name-style 'forward)
 
+(use-package base-keys
+  :straight nil
+  :init (global-set-key (kbd "H-g") (kbd "C-g"))
+  :bind (("H-h" . left-char)
+         ("H-j" . next-line)
+         ("H-k" . previous-line)
+         ("H-l" . right-char)
+         ("H-/" . swiper)
+         ("H-a" . move-beginning-of-line)
+         ("H-e" . move-end-of-line)
+         ("H-u" . undo)
+         ("H-s" . save-buffer)))
+
 ;; Load theme
 (use-package idea-darkula-theme
   :init
