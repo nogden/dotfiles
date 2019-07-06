@@ -34,7 +34,9 @@
 
 (use-package base-keys
   :straight nil
-  :init (global-set-key (kbd "H-g") (kbd "C-g"))
+  :init
+  (global-set-key (kbd "H-g") (kbd "C-g"))
+  (global-set-key (kbd "H-c") (kbd "C-c"))
   :bind (("H-h" . left-char)
          ("H-j" . next-line)
          ("H-k" . previous-line)
@@ -43,7 +45,8 @@
          ("H-a" . move-beginning-of-line)
          ("H-e" . move-end-of-line)
          ("H-u" . undo)
-         ("H-s" . save-buffer)))
+         ("H-s" . save-buffer)
+         ("H-y" . yank)))
 
 ;; Load theme
 (use-package idea-darkula-theme
@@ -88,7 +91,11 @@
 
 (use-package windmove
   :config                   ;; Allow navigating between splits with super key
-  (windmove-default-keybindings 'super))
+  (windmove-default-keybindings 'super)
+  :bind (("H-w H-h" . windmove-left)
+         ("H-w H-j" . windmove-down)
+         ("H-w H-k" . windmove-up)
+         ("H-w H-l" . windmove-right)))
 
 ;; Easy buffer movement
 (use-package buffer-move
