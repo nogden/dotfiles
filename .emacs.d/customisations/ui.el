@@ -105,7 +105,16 @@
 
 (use-package windmove
   :config                   ;; Allow navigating between splits with super key
-  (windmove-default-keybindings 'super))
+  (windmove-default-keybindings 'super)
+  :ryo
+  ("w" (("h" windmove-left)
+        ("j" windmove-down)
+        ("k" windmove-up)
+        ("l" windmove-right)
+        ("0" delete-window)
+        ("1" delete-other-windows)
+        ("2" split-window-below)
+        ("3" split-window-right))))
 
 ;; Easy buffer movement
 (use-package buffer-move
