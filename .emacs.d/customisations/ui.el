@@ -104,8 +104,10 @@
   :config (global-company-mode))
 
 (use-package windmove
-  :config                   ;; Allow navigating between splits with super key
-  (windmove-default-keybindings 'super)
+  :bind (("<s-up>"    . windmove-up)
+         ("<s-down>"  . windmove-down)
+         ("<s-left>"  . windmove-left)
+         ("<s-right>" . windmove-right))
   :ryo
   ("w" (("h" windmove-left)
         ("j" windmove-down)

@@ -2,7 +2,7 @@
 
 (use-package rust-mode
   :hook (rust-mode . electric-pair-mode)
-  :bind (("C-c <space>" . rust-format-buffer)
+  :bind (("C-c SPC" . rust-format-buffer)
          ("C-;"         . comment-line)))
 
 (use-package racer
