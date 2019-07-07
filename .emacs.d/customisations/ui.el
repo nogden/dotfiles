@@ -32,22 +32,6 @@
 ;; Make identical buffer names unique
 (setq uniquify-buffer-name-style 'forward)
 
-(use-package base-keys
-  :straight nil
-  :init
-  (global-set-key (kbd "H-g") (kbd "C-g"))
-  (global-set-key (kbd "H-c") (kbd "C-c"))
-  :bind (("H-h" . left-char)
-         ("H-j" . next-line)
-         ("H-k" . previous-line)
-         ("H-l" . right-char)
-         ("H-/" . swiper)
-         ("H-a" . move-beginning-of-line)
-         ("H-e" . move-end-of-line)
-         ("H-u" . undo)
-         ("H-s" . save-buffer)
-         ("H-y" . yank)))
-
 ;; Load theme
 (use-package idea-darkula-theme
   :init
@@ -70,6 +54,7 @@
   :delight)
 
 (use-package counsel
+  :commands swiper
   :bind* (("M-x"       . counsel-M-x)
           ("C-s"       . swiper)
           ("C-x f"     . counsel-projectile-rg)
@@ -78,6 +63,35 @@
           ("C-c g"     . counsel-git)
           ("C-c l"     . counsel-locate)
           ("C-c C-f"   . counsel-find-file)))
+
+(use-package ryo-modal
+  :commands ryo-modal-mode
+  :hook (prog-mode . ryo-modal-mode)
+  :bind ("<escape>" . ryo-modal-mode)
+  :config
+  (setq ryo-modal-cursor-color "#A9B7C6")
+  (ryo-modal-keys
+   ("<escape>" keyboard-quit)
+   ("i"        ryo-modal-mode)
+   ("h"        left-char)
+   ("j"        next-line)
+   ("k"        previous-line)
+   ("l"        right-char)
+   ("a" (("h"  move-beginning-of-line)
+         ("l"  move-end-of-line)
+         ("j"  scroll-up)
+         ("k"  scroll-down)))
+   ("u"        undo)
+   ("/"        swiper)))
+
+(use-package expand-region
+  :ryo
+  ("e" er/expand-region)
+  ("r" (("f" query-replace)
+        ("w" er/mark-word     :name "Replace word")
+        ("s" er/mark-sentence :name "Replace sentence")
+        ("c" er/mark-defun    :name "Replace function"))
+   :then '(kill-region) :exit t))
 
 (use-package smart-mode-line
   :init
@@ -91,11 +105,7 @@
 
 (use-package windmove
   :config                   ;; Allow navigating between splits with super key
-  (windmove-default-keybindings 'super)
-  :bind (("H-w H-h" . windmove-left)
-         ("H-w H-j" . windmove-down)
-         ("H-w H-k" . windmove-up)
-         ("H-w H-l" . windmove-right)))
+  (windmove-default-keybindings 'super))
 
 ;; Easy buffer movement
 (use-package buffer-move

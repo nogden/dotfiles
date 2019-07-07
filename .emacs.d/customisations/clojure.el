@@ -24,6 +24,11 @@
          ("<f2>"    . cider-find-var)
          ("<f1>"    . cider-pop-back)
          ("C-c C-n" . cider-eval-ns-form))
+  :ryo
+  ("f"   cider-find-var)
+  ("d"   cider-pop-back)
+  ("c c" cider-eval-defun-at-point)
+  ("c c" cider-eval-ns-form)
   :init
   (setq cider-repl-display-help-banner      nil
         cider-repl-pop-to-buffer-on-connect 'display-only
