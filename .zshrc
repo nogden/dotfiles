@@ -8,6 +8,9 @@ export ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 # Start zim
 [[ -s ${ZIM_HOME}/init.zsh ]] && source ${ZIM_HOME}/init.zsh
 
+# Make sure tmux starts in 256 colour mode
+export TERM="screen-256color"
+
 # If not running interactively, do not do anything
 # otherwise, use tmux
 [[ $- != *i* ]] && return
@@ -31,9 +34,6 @@ export PAGER="less -R"
 
 # Use vim by default
 export EDITOR="vim"
-
-# Make sure txux starts in 256 colour mode
-export TERM="xterm-256color"
 
 # Command line emacs
 alias emacs="emacs -nw --no-desktop"
