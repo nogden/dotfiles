@@ -2,8 +2,7 @@
 
 (use-package rust-mode
   :hook (rust-mode . electric-pair-mode)
-  :bind (("C-c SPC" . rust-format-buffer)
-         ("C-;"         . comment-line)))
+  :bind (("C-;"         . comment-line)))
 
 (use-package racer
   :hook ((rust-mode  . racer-mode)
@@ -17,6 +16,11 @@
   ("d" pop-tag-mark))
 
 (use-package cargo
-  :hook (rust-mode . cargo-minor-mode))
+  :hook (rust-mode . cargo-minor-mode)
+  :ryo
+  (:mode 'cargo-minor-mode :norepeat t)
+  ("c" (("b" cargo-process-build)
+        ("t" cargo-process-test)
+        ("c" cargo-process-check))))
 
 (use-package toml-mode)

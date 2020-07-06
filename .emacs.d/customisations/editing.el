@@ -23,6 +23,7 @@
 
 ;; Key bindings
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)  ;; Comments
+(global-set-key (kbd "C-c m") 'set-rectangular-region-anchor) ;; Multiple cursors
 
 (desktop-save-mode 1)
 

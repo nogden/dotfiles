@@ -44,6 +44,9 @@
   :config
   (setq git-commit-summary-max-length 66))
 
+(use-package forge
+  :after magit)
+
 ;; Lisp
 (use-package paredit
   :hook ((emacs-lisp-mode
@@ -70,22 +73,22 @@
 (use-package lsp-mode
   :hook (rust-mode c-mode c++-mode)
   :commands lsp
-  :bind (("C-c M-j" . lsp)))
-
-(use-package company-lsp
-  :after lsp-mode
-  :commands company-lsp
+  :bind (("C-c M-j" . lsp)
+         ("<f2>"    . lsp-find-definition)
+         ("<f1>"    . pop-tag-mark))
   :init
-  (push 'company-lsp company-backends))
+  (setq lsp-rust-server             'rust-analyzer
+        lsp-eldoc-render-all        t
+        lsp-signature-auto-activate t))
+
+(use-package lsp-ivy
+  :commands lsp-ivy-workspace-symbol)
 
 ;; C / C++
 (use-package cc-mode
   :straight nil
   :bind (:map c++-mode-map
-         ("C-c C-c" . run-build-script)
-         ("<f2>"    . lsp-find-definition)
-         ("<f1>"    . pop-tag-mark)
-         ("C-r"     . query-replace)))
+         ("C-c C-c" . run-build-script)))
 
 ;; Debugging support
 (use-package gdb-mi
@@ -115,3 +118,8 @@
          (default-directory (file-name-directory build-script)))
     (compile build-script))
   (other-window 1))
+
+(use-package elpy
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))

@@ -50,7 +50,7 @@
         ivy-height 15
         ivy-count-format "(%d/%d) "
         ivy-extra-directories nil
-        ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+        ivy-re-builders-alist '((t . ivy--regex-plus)))
   :delight)
 
 (use-package counsel
@@ -82,16 +82,22 @@
          ("j"  scroll-up)
          ("k"  scroll-down)))
    ("u"        undo)
-   ("/"        swiper)))
+   ("/"        swiper)
+   ("s"        save-buffer)
+   ("r r"      query-replace)))
 
 (use-package expand-region
   :ryo
   ("e" er/expand-region)
-  ("r" (("f" query-replace)
-        ("w" er/mark-word     :name "Replace word")
+  ("r" (("w" er/mark-word     :name "Replace word")
         ("s" er/mark-sentence :name "Replace sentence")
         ("c" er/mark-defun    :name "Replace function"))
    :then '(kill-region) :exit t))
+
+(use-package anzu
+  :config (global-anzu-mode 1)
+  :bind (("C-r"   . anzu-query-replace-at-cursor)
+         ("C-x r" . anzu-query-replace-regexp)))
 
 (use-package smart-mode-line
   :init
