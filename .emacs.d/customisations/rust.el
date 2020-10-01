@@ -5,15 +5,11 @@
   :bind (("C-;"         . comment-line)))
 
 (use-package racer
-  :hook ((rust-mode  . racer-mode)
-         (racer-mode . eldoc-mode))
+  :hook ((rust-mode  . racer-mode))
   :bind (:map racer-mode-map
-         ("<f2>"        . racer-find-definition)
-         ("<f1>"        . pop-tag-mark)
-         ("C-c C-d C-d" . racer-describe))
-  :ryo
-  ("f" racer-find-definition)
-  ("d" pop-tag-mark))
+        ("<f2>"        . racer-find-definition)
+        ("<f1>"        . pop-tag-mark)
+         ("C-c C-d C-d" . racer-describe)))
 
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode)

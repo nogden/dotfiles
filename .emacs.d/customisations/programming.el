@@ -71,7 +71,7 @@
 
 ;; LSP support
 (use-package lsp-mode
-  :hook (rust-mode c-mode c++-mode)
+  :hook (c-mode c++-mode)
   :commands lsp
   :bind (("C-c M-j" . lsp)
          ("<f2>"    . lsp-find-definition)
