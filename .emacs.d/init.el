@@ -147,7 +147,11 @@
 
 (use-package company
   :defer t
-  :config (global-company-mode))
+  :config
+  (setq company-minimum-prefix-length     1
+        company-idle-delay                0.0
+        company-tooltip-align-annotations t)
+  (global-company-mode))
 
 (use-package windmove
   :bind (("<s-up>"    . windmove-up)
@@ -355,17 +359,25 @@
 
 ;; LSP support
 (use-package lsp-mode
-  :hook (c-mode c++-mode)
+  :hook (c-mode c++-mode rust-mode)
   :commands lsp
   :bind (("C-c M-j" . lsp)
          ("<f2>"    . lsp-find-definition)
-         ("<f1>"    . pop-tag-mark))
+         ("<f1>"    . pop-tag-mark)
+         ("C-c d"   . lsp-describe-thing-at-point))
   :init
-  (setq lsp-rust-server             'rust-analyzer
-        lsp-signature-auto-activate t))
+  (setq lsp-rust-server                  'rust-analyzer
+        lsp-signature-auto-activate      t
+        lsp-modeline-diagnostics-enable  t
+        lsp-modeline-code-actions-enable t))
 
 (use-package lsp-ivy
-  :commands lsp-ivy-workspace-symbol)
+  :commands lsp-ivy-workspace-symbol
+  :bind (("C-c f s" . lsp-ivy-workspace-symbol)))
+
+(use-package lsp-treemacs
+  :bind (("C-c f r" . lsp-treemacs-references)
+         ("C-c c h" . lsp-treemacs-call-hierarchy)))
 
 ;; C / C++
 (use-package cc-mode
@@ -449,13 +461,6 @@
 (use-package rust-mode
   :hook (rust-mode . electric-pair-mode)
   :bind (("C-;"         . comment-line)))
-
-(use-package racer
-  :hook ((rust-mode  . racer-mode))
-  :bind (:map racer-mode-map
-        ("<f2>"        . racer-find-definition)
-        ("<f1>"        . pop-tag-mark)
-         ("C-c C-d C-d" . racer-describe)))
 
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode)
