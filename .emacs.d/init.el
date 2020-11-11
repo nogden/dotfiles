@@ -27,13 +27,12 @@
 (require 'use-package)
 (setq use-package-always-ensure t)  ; Install packages if needed
 
-;; Ensure we have the same env vars as the shell in OS X
+;; Ensure we have the same env vars as the shell
 (use-package exec-path-from-shell
-  :when (memq window-system '(mac ns))
+  :when (memq window-system '(mac ns x))
   :config
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs
-   '("PATH")))
+  (setq exec-path-from-shell-arguments nil)
+  (exec-path-from-shell-initialize))
 
 (add-to-list 'load-path "vendor")
 
@@ -471,6 +470,12 @@
         ("c" cargo-process-check))))
 
 (use-package toml-mode)
+
+;; Go
+(use-package go-mode
+  :bind (:map go-mode-map
+              ("<f2>" . godef-jump)
+              ("<f1>" . pop-tag-mark)))
 
 ;; HTML / Javascript / CSS
 (use-package mhtml-mode
