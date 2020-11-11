@@ -19,3 +19,5 @@
 	required = true
 [credential]
 	helper = libsecret
+[pull]
+	ff = only
