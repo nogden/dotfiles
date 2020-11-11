@@ -227,12 +227,14 @@
       mouse-yank-at-point                 t)
 
 (delete-selection-mode 1)               ;; Overwrite selected text when typing.
-(setq-default indent-tabs-mode nil)     ;; Don't use hard tabs
+
 (add-hook 'before-save-hook
           'delete-trailing-whitespace)  ;; Delete trailing whitespace on save
+(setq-default indent-tabs-mode nil      ;; Don't use hard tabs
+              tab-width        4
+              sh-basic-offset  2
+              sh-indentation   2)
 (setq electric-indent-mode 1)           ;; Enter performs auto-indent
-(setq-default sh-basic-offset 2)
-(setq-default sh-indentation  2)
 
 ;; Put backups in ~/.emacs.d/backups.
 (setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
