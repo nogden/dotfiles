@@ -80,7 +80,8 @@
   (load-theme 'idea-darkula t))
 
 (use-package ivy
-  :bind (:map ivy-minibuffer-map
+  :bind (("C-M-r" . ivy-resume)
+         :map ivy-minibuffer-map
          ("C-j" . ivy-immediate-done)
          ("RET" . ivy-alt-done))
   :init
@@ -461,7 +462,7 @@
 ;; Rust
 (use-package rust-mode
   :hook (rust-mode . electric-pair-mode)
-  :bind (("C-;"         . comment-line)))
+  :bind (("C-;"    . comment-line)))
 
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode)
@@ -476,8 +477,17 @@
 ;; Go
 (use-package go-mode
   :bind (:map go-mode-map
-              ("<f2>" . godef-jump)
-              ("<f1>" . pop-tag-mark)))
+              ("<f2>"    . godef-jump)
+              ("<f1>"    . pop-tag-mark)
+              ("C-c d"   . godoc-at-point)
+              ("C-c C-c" . compile))
+  :hook (before-save . gofmt-before-save)
+  :config
+  (setq compile-command          "go build -v"
+        compilation-read-command nil))
+
+(use-package go-eldoc
+  :hook (go-mode . go-eldoc-setup))
 
 ;; HTML / Javascript / CSS
 (use-package mhtml-mode
