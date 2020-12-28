@@ -2,12 +2,6 @@
 # User configuration sourced by interactive shells
 #
 
-# Define zim location
-export ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
-
-# Start zim
-[[ -s ${ZIM_HOME}/init.zsh ]] && source ${ZIM_HOME}/init.zsh
-
 # Make sure tmux starts in 256 colour mode
 export TERM="screen-256color"
 
@@ -25,6 +19,4 @@ unsetopt appendhistory beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-autoload -Uz promptinit
-  promptinit
-  prompt gitster
+eval "$(starship init zsh)"
