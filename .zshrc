@@ -19,4 +19,15 @@ unsetopt appendhistory beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+# Match for completion ignoring case
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Make up and down arrows perform a history search
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
+
 eval "$(starship init zsh)"

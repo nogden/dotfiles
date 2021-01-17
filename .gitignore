@@ -11,6 +11,8 @@
 !.emacs.d/vendor/
 !.emacs.d/vendor/*
 
+!.config/starship.toml
+
 !.tmux.conf
 !.vimrc
 !.zshrc
