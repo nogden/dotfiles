@@ -2,7 +2,7 @@
 # User configuration sourced by all shells (including non-interactive)
 #
 
-export PAGER="less -R"                # Was used by yaourt, is it still needed?
+export PAGER="less -S"                # -S => Don't linewrap
 export EDITOR="vim"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 

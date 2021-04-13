@@ -21,3 +21,5 @@
 	helper = libsecret
 [pull]
 	ff = only
+[init]
+	defaultBranch = master
