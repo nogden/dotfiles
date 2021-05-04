@@ -18,3 +18,6 @@ CARGO_PATH=~/.cargo/bin               # Binaries installed by cargo live here
 GO_BINARY_PATH=~/.go/bin
 
 export PATH=$PATH:$CARGO_PATH:$GO_BINARY_PATH
+
+# Include stuff specific to this machine
+[ -f .localrc ] && source .localrc
