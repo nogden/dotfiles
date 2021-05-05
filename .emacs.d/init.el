@@ -286,7 +286,10 @@
   :defer t
   :config
   (setq org-default-notes-file (concat org-directory "/notes.org")
-        org-startup-indented   t))
+        org-startup-indented   t
+        org-confirm-babel-evaluate nil
+        org-plantuml-jar-path  "/usr/share/java/plantuml/plantuml.jar")
+  (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
 
 ;; Programming
 
