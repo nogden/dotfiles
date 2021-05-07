@@ -21,6 +21,8 @@ bindkey -e
 
 # Match for completion ignoring case
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+setopt COMPLETE_ALIASES
+autoload -Uz compinit && compinit
 
 # Make up and down arrows perform a history search
 autoload -U up-line-or-beginning-search
@@ -29,5 +31,7 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
+
+alias ls='ls --color=auto'
 
 eval "$(starship init zsh)"

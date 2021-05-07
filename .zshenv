@@ -2,8 +2,8 @@
 # User configuration sourced by all shells (including non-interactive)
 #
 
-export PAGER="less -S"                # -S => Don't linewrap
-export EDITOR="vim"
+export PAGER="less -FRSX"  # Exit single page, allow colours, don't linewrap, leave output
+export EDITOR="nvim"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 alias emacs="emacs -nw --no-desktop"  # Command line emacs
