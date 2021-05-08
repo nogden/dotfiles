@@ -104,6 +104,10 @@
           ("C-c l"     . counsel-locate)
           ("C-c C-f"   . counsel-find-file)))
 
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode))
+
 (use-package ryo-modal
   :commands ryo-modal-mode
   :hook (prog-mode . ryo-modal-mode)
