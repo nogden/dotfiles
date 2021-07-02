@@ -9,6 +9,7 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 alias emacs="emacs -nw --no-desktop"  # Command line emacs
 alias proxy_tunnel="ssh -C2qTnN -D"   # Tunneling proxy
 alias watch="watch "                  # Make watch work with aliases
+alias dc="docker-compose"
 
 # Tell racer where to find the rust source
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"

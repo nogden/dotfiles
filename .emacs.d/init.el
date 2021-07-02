@@ -253,14 +253,6 @@
 
 (desktop-save-mode 1)
 
-;; Temporary
-(use-package esup
-  :ensure t
-  :init
-  (setq esup-depth 0)
-  :pin melpa
-  :commands (esup))
-
 ;; Easy switching to recently edited files
 (use-package recentf
   :init
@@ -368,7 +360,7 @@
 
 ;; LSP support
 (use-package lsp-mode
-  :hook (c-mode c++-mode rust-mode)
+  :hook (c-mode c++-mode rustic-mode)
   :commands lsp
   :bind (("C-c M-j" . lsp)
          ("<f2>"    . lsp-find-definition)
@@ -467,12 +459,38 @@
                                              (figwheel-sidecar.repl-api/cljs-repl))"))
 
 ;; Rust
-(use-package rust-mode
-  :hook (rust-mode . electric-pair-mode)
-  :bind (("C-;"    . comment-line)))
+(use-package rustic
+  :ensure
+  :bind (:map rustic-mode-map
+         ("C-c SPC"   . lsp-ui-imenu)
+         ("C-c f r"   . lsp-find-references)
+         ("C-c C-c l" . flycheck-list-errors)
+         ("C-c C-c a" . lsp-execute-code-action)
+         ("C-c r"     . lsp-rename)
+         ("C-c C-c q" . lsp-workspace-restart)
+         ("C-c C-c Q" . lsp-workspace-shutdown)
+         ("C-c C-c s" . lsp-rust-analyzer-status)
+         ("C-;"       . comment-line))
+  :config
+  ;; uncomment for less flashiness
+  ;; (setq lsp-eldoc-hook nil)
+  ;; (setq lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-signature-auto-activate nil)
+
+  ;; comment to disable rustfmt on save
+  (setq rustic-format-on-save t)
+  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
+
+(defun rk/rustic-mode-hook ()
+  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
+  ;; save rust buffers that are not file visiting. Once
+  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+  ;; no longer be necessary.
+  (when buffer-file-name
+    (setq-local buffer-save-without-query t)))
 
 (use-package cargo
-  :hook (rust-mode . cargo-minor-mode)
+  :hook (rustic-mode . cargo-minor-mode)
   :ryo
   (:mode 'cargo-minor-mode :norepeat t)
   ("c" (("b" cargo-process-build)
