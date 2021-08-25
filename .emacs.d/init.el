@@ -108,35 +108,36 @@
   :config
   (global-undo-tree-mode))
 
-(use-package ryo-modal
-  :commands ryo-modal-mode
-  :hook (prog-mode . ryo-modal-mode)
-  :bind ("<escape>" . ryo-modal-mode)
-  :config
-  (setq ryo-modal-cursor-color "#A9B7C6")
-  (ryo-modal-keys
-   ("<escape>" keyboard-quit)
-   ("i"        ryo-modal-mode)
-   ("h"        left-char)
-   ("j"        next-line)
-   ("k"        previous-line)
-   ("l"        right-char)
-   ("a" (("h"  move-beginning-of-line)
-         ("l"  move-end-of-line)
-         ("j"  scroll-up)
-         ("k"  scroll-down)))
-   ("u"        undo)
-   ("/"        swiper)
-   ("s"        save-buffer)
-   ("r r"      query-replace)))
+;; (use-package ryo-modal
+;;   :commands ryo-modal-mode
+;;   :hook (prog-mode . ryo-modal-mode)
+;;   :bind ("<escape>" . ryo-modal-mode)
+;;   :config
+;;   (setq ryo-modal-cursor-color "#A9B7C6")
+;;   (ryo-modal-keys
+;;    ("<escape>" keyboard-quit)
+;;    ("i"        ryo-modal-mode)
+;;    ("h"        left-char)
+;;    ("j"        next-line)
+;;    ("k"        previous-line)
+;;    ("l"        right-char)
+;;    ("a" (("h"  move-beginning-of-line)
+;;          ("l"  move-end-of-line)
+;;          ("j"  scroll-up)
+;;          ("k"  scroll-down)))
+;;    ("u"        undo)
+;;    ("/"        swiper)
+;;    ("s"        save-buffer)
+;;    ("r r"      query-replace)))
 
 (use-package expand-region
-  :ryo
-  ("e" er/expand-region)
-  ("r" (("w" er/mark-word     :name "Replace word")
-        ("s" er/mark-sentence :name "Replace sentence")
-        ("c" er/mark-defun    :name "Replace function"))
-   :then '(kill-region) :exit t))
+  ;; :ryo
+  ;; ("e" er/expand-region)
+  ;; ("r" (("w" er/mark-word     :name "Replace word")
+  ;;       ("s" er/mark-sentence :name "Replace sentence")
+  ;;       ("c" er/mark-defun    :name "Replace function"))
+  ;;  :then '(kill-region) :exit t)
+  )
 
 (use-package anzu
   :config (global-anzu-mode 1)
@@ -162,15 +163,16 @@
          ("<s-down>"  . windmove-down)
          ("<s-left>"  . windmove-left)
          ("<s-right>" . windmove-right))
-  :ryo
-  ("w" (("h" windmove-left)
-        ("j" windmove-down)
-        ("k" windmove-up)
-        ("l" windmove-right)
-        ("0" delete-window)
-        ("1" delete-other-windows)
-        ("2" split-window-below)
-        ("3" split-window-right))))
+  ;; :ryo
+  ;; ("w" (("h" windmove-left)
+  ;;       ("j" windmove-down)
+  ;;       ("k" windmove-up)
+  ;;       ("l" windmove-right)
+  ;;       ("0" delete-window)
+  ;;       ("1" delete-other-windows)
+  ;;       ("2" split-window-below)
+  ;;       ("3" split-window-right)))
+  )
 
 ;; Easy buffer movement
 (use-package buffer-move
@@ -367,10 +369,12 @@
          ("<f1>"    . pop-tag-mark)
          ("C-c d"   . lsp-describe-thing-at-point))
   :init
-  (setq lsp-rust-server                  'rust-analyzer
+  (setq read-process-output-max          (* 1024 1024)
+        lsp-headerline-breadcrumb-enable nil
+        lsp-eldoc-enable-hover           t
+        lsp-rust-server                  'rust-analyzer
         lsp-signature-auto-activate      t
-        lsp-modeline-diagnostics-enable  t
-        lsp-modeline-code-actions-enable t))
+        lsp-modeline-diagnostics-enable  t))
 
 (use-package lsp-ivy
   :commands lsp-ivy-workspace-symbol
@@ -438,12 +442,12 @@
          ("<f2>"    . cider-find-var)
          ("<f1>"    . cider-pop-back)
          ("C-c C-n" . cider-eval-ns-form))
-  :ryo
-  (:mode 'cider-mode :norepeat t)
-  ("a" (("f"   cider-find-var)
-        ("d"   cider-pop-back)))
-  ("c" (("c" cider-eval-defun-at-point)
-        ("n" cider-eval-ns-form)))
+  ;; :ryo
+  ;; (:mode 'cider-mode :norepeat t)
+  ;; ("a" (("f"   cider-find-var)
+  ;;       ("d"   cider-pop-back)))
+  ;; ("c" (("c" cider-eval-defun-at-point)
+  ;;       ("n" cider-eval-ns-form)))
   :init
   (setq cider-repl-display-help-banner      nil
         cider-repl-pop-to-buffer-on-connect 'display-only
@@ -461,6 +465,7 @@
 ;; Rust
 (use-package rustic
   :ensure
+  :hook ((rustic-mode . electric-pair-mode))
   :bind (:map rustic-mode-map
          ("C-c SPC"   . lsp-ui-imenu)
          ("C-c f r"   . lsp-find-references)
@@ -491,13 +496,15 @@
 
 (use-package cargo
   :hook (rustic-mode . cargo-minor-mode)
-  :ryo
-  (:mode 'cargo-minor-mode :norepeat t)
-  ("c" (("b" cargo-process-build)
-        ("t" cargo-process-test)
-        ("c" cargo-process-check))))
+  ;; :ryo
+  ;; (:mode 'cargo-minor-mode :norepeat t)
+  ;; ("c" (("b" cargo-process-build)
+  ;;       ("t" cargo-process-test)
+  ;;       ("c" cargo-process-check)))
+  )
 
-(use-package toml-mode)
+(use-package toml-mode
+  :hook (toml-mode . electric-pair-mode))
 
 ;; Go
 (use-package go-mode
@@ -516,6 +523,7 @@
 
 ;; HTML / Javascript / CSS
 (use-package mhtml-mode
+  :mode ("\\.vue$" "\\.svelte$")
   :hook (sgml-mode . subword-mode))
 
 (use-package tagedit
@@ -529,6 +537,4 @@
 (use-package js-mode
   :ensure nil
   :mode "\\.js$"
-  :hook (js-mode . subword-mode)
-  :config
-  (setq js-indent-level 2))
+  :hook (js-mode . subword-mode))
