@@ -14,6 +14,8 @@
 ;;      ("melpa-stable" . "https://stable.melpa.org/packages/")
         ("melpa"        . "https://melpa.org/packages/")))
 
+(add-to-list 'load-path "vendor")  ;; Locally installed packages
+
 ;; Load and activate emacs packages. Do this first so that the
 ;; packages are loaded before we start trying to modify them.  This
 ;; also sets the load path.
@@ -33,8 +35,6 @@
   :config
   (setq exec-path-from-shell-arguments nil)
   (exec-path-from-shell-initialize))
-
-(add-to-list 'load-path "vendor")
 
 ;; UI
 
@@ -286,7 +286,10 @@
   (setq org-default-notes-file (concat org-directory "/notes.org")
         org-startup-indented   t
         org-confirm-babel-evaluate nil
-        org-plantuml-jar-path  "/usr/share/java/plantuml/plantuml.jar")
+        org-plantuml-jar-path  "/usr/share/java/plantuml/plantuml.jar"
+        org-babel-default-header-args:plantuml '((:results . "file")
+                                                 (:exports . "results")
+                                                 (:java . "-Dfile.encoding=UTF-8 -Djava.awt.headless=true")))
   (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
 
 ;; Programming
@@ -315,7 +318,7 @@
 (use-package projectile
   :bind-keymap ("C-c p" . projectile-command-map)
   :config
-  (projectile-global-mode))
+  (projectile-mode))
 
 (use-package counsel-projectile
   :after (counsel projectile)
@@ -331,6 +334,7 @@
 
 (use-package flycheck
   :init
+  (setq flycheck-highlighting-style nil) ;; Turn off wiggly lines
   (global-flycheck-mode))
 
 ;; Git
@@ -367,14 +371,17 @@
   :bind (("C-c M-j" . lsp)
          ("<f2>"    . lsp-find-definition)
          ("<f1>"    . pop-tag-mark)
-         ("C-c d"   . lsp-describe-thing-at-point))
+         ("C-c d"   . lsp-describe-thing-at-point)
+         ("C-c a"   . lsp-execute-code-action))
   :init
+  (yas-global-mode)
   (setq read-process-output-max          (* 1024 1024)
         lsp-headerline-breadcrumb-enable nil
         lsp-eldoc-enable-hover           t
         lsp-rust-server                  'rust-analyzer
         lsp-signature-auto-activate      t
-        lsp-modeline-diagnostics-enable  t))
+        lsp-modeline-diagnostics-enable  t
+        lsp-enable-snippet               t))
 
 (use-package lsp-ivy
   :commands lsp-ivy-workspace-symbol
@@ -383,6 +390,8 @@
 (use-package lsp-treemacs
   :bind (("C-c f r" . lsp-treemacs-references)
          ("C-c c h" . lsp-treemacs-call-hierarchy)))
+
+(use-package all-the-icons)
 
 ;; C / C++
 (use-package cc-mode
@@ -470,6 +479,7 @@
          ("C-c SPC"   . lsp-ui-imenu)
          ("C-c f r"   . lsp-find-references)
          ("C-c C-c l" . flycheck-list-errors)
+         ("C-x `"     . flycheck-next-error)
          ("C-c C-c a" . lsp-execute-code-action)
          ("C-c r"     . lsp-rename)
          ("C-c C-c q" . lsp-workspace-restart)
@@ -482,8 +492,7 @@
   ;; (setq lsp-enable-symbol-highlighting nil)
   ;; (setq lsp-signature-auto-activate nil)
 
-  ;; comment to disable rustfmt on save
-  (setq rustic-format-on-save t)
+  (setq rustic-format-on-save nil)
   (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
 
 (defun rk/rustic-mode-hook ()
