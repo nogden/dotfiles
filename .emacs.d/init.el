@@ -547,3 +547,9 @@
   :ensure nil
   :mode "\\.js$"
   :hook (js-mode . subword-mode))
+
+(use-package typescript-mode
+  :mode ("\\.ts$" "\\.tsx$")
+  :hook (sgml-mode . subword-mode)
+  :config
+  (setq typescript-indent-level 2))
