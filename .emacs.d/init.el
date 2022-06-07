@@ -102,11 +102,8 @@
           ("C-x C-g f" . counsel-git-grep)
           ("C-c g"     . counsel-git)
           ("C-c l"     . counsel-locate)
-          ("C-c C-f"   . counsel-find-file)))
-
-(use-package undo-tree
-  :config
-  (global-undo-tree-mode))
+          ("C-c C-f"   . counsel-find-file)
+          ("C-c s"     . ispell)))
 
 ;; (use-package ryo-modal
 ;;   :commands ryo-modal-mode
@@ -184,16 +181,6 @@
 (use-package ibuffer
   :bind (("C-x C-b" . ibuffer)))
 
-(use-package treemacs
-  :commands treemacs
-  :bind ("C-x t" . treemacs))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile))
-
-(use-package treemacs-magit
-  :after (treemacs magit))
-
 ;; Make C-x +/-/0 zoom frames, not buffers
 (use-package zoom-frm
   :ensure nil
@@ -220,9 +207,9 @@
 ;; Switch between HiDPI and non HiDPI mode
 (defun hidpi-mode ()
   (interactive)
-  (if (> 120 (face-attribute 'default :height (selected-frame)))
-    (set-face-attribute 'default (selected-frame) :height 130)
-    (set-face-attribute 'default (selected-frame) :height 93)))
+  (if (> 100 (face-attribute 'default :height (selected-frame)))
+    (set-face-attribute 'default (selected-frame) :height 110)
+    (set-face-attribute 'default (selected-frame) :height 100)))
 
 ;; Editing
 
@@ -333,8 +320,10 @@
           cider-mode) . eldoc-mode))
 
 (use-package flycheck
+  :defer t
   :init
   (setq flycheck-highlighting-style nil) ;; Turn off wiggly lines
+  :config
   (global-flycheck-mode))
 
 ;; Git
@@ -342,9 +331,6 @@
   :bind (("C-x g" . magit-status))
   :config
   (setq git-commit-summary-max-length 66))
-
-(use-package forge
-  :after magit)
 
 ;; Lisp
 (use-package paredit
@@ -365,33 +351,50 @@
   :hook LaTeX-mode-hook)
 
 ;; LSP support
-(use-package lsp-mode
-  :hook (c-mode c++-mode rustic-mode)
-  :commands lsp
-  :bind (("C-c M-j" . lsp)
-         ("<f2>"    . lsp-find-definition)
+(use-package eglot
+  :bind (("C-c M-j" . eglot)
+         ("<f2>"    . xref-find-definitions)
          ("<f1>"    . pop-tag-mark)
-         ("C-c d"   . lsp-describe-thing-at-point)
-         ("C-c a"   . lsp-execute-code-action))
+         ("C-c d"   . eldoc)
+         ("C-c a"   . eglot-code-actions)
+         ("C-c r"   . eglot-rename))
   :init
-  (yas-global-mode)
-  (setq read-process-output-max          (* 1024 1024)
-        lsp-headerline-breadcrumb-enable nil
-        lsp-eldoc-enable-hover           t
-        lsp-rust-server                  'rust-analyzer
-        lsp-signature-auto-activate      t
-        lsp-modeline-diagnostics-enable  t
-        lsp-enable-snippet               t))
+  (setq eldoc-echo-area-use-multiline-p            2
+        eldoc-echo-area-display-truncation-message nil)
+  ;; (setq read-process-output-max          (* 1024 1024)
+  ;;       lsp-headerline-breadcrumb-enable nil
+  ;;       lsp-eldoc-enable-hover           t
+  ;;       lsp-rust-server                  'rust-analyzer
+  ;;       lsp-signature-auto-activate      t
+  ;;       lsp-modeline-diagnostics-enable  t
+  ;;       lsp-enable-snippet               t)
+  :config
+  (yas-global-mode))
 
-(use-package lsp-ivy
-  :commands lsp-ivy-workspace-symbol
-  :bind (("C-c f s" . lsp-ivy-workspace-symbol)))
+;; LSP support
+;; (use-package lsp-mode
+;;   :hook (c-mode c++-mode rustic-mode)
+;;   :commands lsp
+;;   :bind (("C-c M-j" . lsp)
+;;          ("<f2>"    . lsp-find-definition)
+;;          ("<f1>"    . pop-tag-mark)
+;;          ("C-c d"   . lsp-describe-thing-at-point)
+;;          ("C-c a"   . lsp-execute-code-action))
+;;   :init
+;;   (yas-global-mode)
+;;   (setq read-process-output-max          (* 1024 1024)
+;;         lsp-headerline-breadcrumb-enable nil
+;;         lsp-eldoc-enable-hover           t
+;;         lsp-rust-server                  'rust-analyzer
+;;         lsp-signature-auto-activate      t
+;;         lsp-modeline-diagnostics-enable  t
+;;         lsp-enable-snippet               t))
 
-(use-package lsp-treemacs
-  :bind (("C-c f r" . lsp-treemacs-references)
-         ("C-c c h" . lsp-treemacs-call-hierarchy)))
+;; (use-package lsp-ivy
+;;   :commands lsp-ivy-workspace-symbol
+;;   :bind (("C-c f s" . lsp-ivy-workspace-symbol)))
 
-(use-package all-the-icons)
+;; (use-package all-the-icons)
 
 ;; C / C++
 (use-package cc-mode
@@ -435,6 +438,7 @@
 
 ;; A little more syntax highlighting
 (use-package clojure-mode-extra-font-locking
+  :defer t
   :after clojure-mode)
 
 (use-package clj-refactor
@@ -473,7 +477,6 @@
 
 ;; Rust
 (use-package rustic
-  :ensure
   :hook ((rustic-mode . electric-pair-mode))
   :bind (:map rustic-mode-map
          ("C-c SPC"   . lsp-ui-imenu)
@@ -485,14 +488,15 @@
          ("C-c C-c q" . lsp-workspace-restart)
          ("C-c C-c Q" . lsp-workspace-shutdown)
          ("C-c C-c s" . lsp-rust-analyzer-status)
-         ("C-;"       . comment-line))
+         ("C-c ;"     . comment-line))
+  :init
+  (setq rustic-lsp-client 'eglot)
+  (setq rustic-format-on-save nil)
   :config
   ;; uncomment for less flashiness
   ;; (setq lsp-eldoc-hook nil)
   ;; (setq lsp-enable-symbol-highlighting nil)
   ;; (setq lsp-signature-auto-activate nil)
-
-  (setq rustic-format-on-save nil)
   (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
 
 (defun rk/rustic-mode-hook ()
@@ -504,13 +508,7 @@
     (setq-local buffer-save-without-query t)))
 
 (use-package cargo
-  :hook (rustic-mode . cargo-minor-mode)
-  ;; :ryo
-  ;; (:mode 'cargo-minor-mode :norepeat t)
-  ;; ("c" (("b" cargo-process-build)
-  ;;       ("t" cargo-process-test)
-  ;;       ("c" cargo-process-check)))
-  )
+  :hook (rustic-mode . cargo-minor-mode))
 
 (use-package toml-mode
   :hook (toml-mode . electric-pair-mode))
@@ -536,7 +534,8 @@
   :hook (sgml-mode . subword-mode))
 
 (use-package tagedit
-  :hook (sgml-mode . tagedit-mode)
+  :hook ((sgml-mode . tagedit-mode)
+         (js-jsx-mode . tagedit-mode))
   :config
   (tagedit-add-paredit-like-keybindings))
 
@@ -545,11 +544,13 @@
 
 (use-package js-mode
   :ensure nil
-  :mode "\\.js$"
-  :hook (js-mode . subword-mode))
+  :mode (("\\.jsx$" . js-jsx-mode)
+         ("\\.tsx$" . js-jsx-mode)
+         ("\\.js$"  . js-mode)
+         ("\\.ts$"  . js-mode))
+  :hook (js-mode . subword-mode)
+  :init
+  (setq js-indent-level 2))
 
-(use-package typescript-mode
-  :mode ("\\.ts$" "\\.tsx$")
-  :hook (sgml-mode . subword-mode)
-  :config
-  (setq typescript-indent-level 2))
+(use-package yaml-mode
+  :mode ("\\.yaml$" "\\.yml$"))
