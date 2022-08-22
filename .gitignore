@@ -15,5 +15,6 @@
 
 !.tmux.conf
 !.vimrc
+!.wezterm.lua
 !.zshrc
 !.zshenv

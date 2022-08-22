@@ -1,0 +1,75 @@
+# Author : Nick Ogden <nick@nickogden.org>
+
+"ui.background" = { bg = "grey01" }
+"ui.menu" = { fg = "grey05", bg = "grey01" }
+"ui.menu.selected" = { fg = "grey01", bg = "grey04" }
+"ui.linenr" = { fg = "grey03", bg = "grey01" }
+"ui.linenr.selected" = { fg = "grey04", bg = "grey01", modifiers = ["bold"] }
+"ui.gutter" = { bg = "grey01" }
+"ui.popup" = { bg = "grey01" }
+"ui.window" = { bg = "grey01" }
+"ui.selection" = { bg = "grey02" }
+"ui.statusline" = { fg = "grey04", bg = "grey02" }
+"ui.help" = { fg = "grey04", bg = "grey01" }
+"ui.cursor" = { fg = "grey04", modifiers = ["reversed"] }
+"ui.cursor.primary" = { fg = "grey05", modifiers = ["reversed"] }
+"ui.cursor.match" = { fg = "white", modifiers = ["underlined"] }
+"ui.text" = "white"
+"ui.text.focus" = "grey05"
+"ui.virtual.ruler" = { bg = "grey02" }
+"operator" = "grey05"
+"variable" = "yellow"
+"variable.other.member" = "yellow"
+"constant" = "yellow"
+"constant.numeric" = "lightblue"
+"constant.character.escape" = "white"
+"attributes" = "yellow"
+"type" = "orange"
+"string"  = "darkgreen"
+"function" = "yellow"
+"constructor" = "yellow"
+"special" = "green"
+"keyword" = "orange"
+"comment" = { fg = "grey", modifiers = ["italic"] }
+"label" = "purple"
+"namespace" = "purple"
+
+"markup.heading" = "white"
+"markup.list" = "white"
+"markup.bold" = { fg = "white", modifiers = ["bold"] }
+"markup.italic" = { fg = "white", modifiers = ["italic"] }
+"markup.link.url" = { fg = "white", modifiers = ["underlined"] }
+"markup.link.text" = "white"
+"markup.quote" = "darkgreen"
+"markup.raw" = "white"
+
+"diff.plus" = "green"
+"diff.delta" = "grey"
+"diff.minus" = "red"
+
+"diagnostic" = { modifiers = ["underlined"] }
+"info" = "grey0D"
+"hint" = "grey03"
+"debug" = "grey03"
+"warning" = "grey09"
+"error" = "grey08"
+
+[palette]
+grey00 = "#181818" # Default Background
+grey01 = "#282828" # Lighter Background (Used for status bars, line number and folding marks)
+grey02 = "#383838" # Selection Background
+grey03 = "#585858" # Comments, Invisibles, Line Highlighting
+grey04 = "#b8b8b8" # Dark Foreground (Used for status bars)
+grey05 = "#d8d8d8" # Default Foreground, Caret, Delimiters, Operators
+grey06 = "#e8e8e8" # Light Foreground (Not often used)
+grey07 = "#f8f8f8" # Light Background (Not often used)
+
+white = "#d0d0d0"
+yellow = "#eedd82"
+orange = "#cc7832"
+red = "#663333"
+purple = "#9876aa"
+green = "#32cd32"
+grey = "#808080"
+darkgreen = "#629755"
+lightblue = "#6897bb"
