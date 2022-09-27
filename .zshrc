@@ -7,8 +7,8 @@ export TERM="screen-256color"
 
 # If not running interactively, do not do anything
 # otherwise, use tmux
-# [[ $- != *i* ]] && return
-# [[ -z "$TMUX" ]] && exec tmux
+#[[ $- != *i* ]] && return
+#[[ -z "$TMUX" ]] && exec tmux
 
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile

@@ -319,12 +319,12 @@
           ielm-mode
           cider-mode) . eldoc-mode))
 
-(use-package flycheck
-  :defer t
-  :init
-  (setq flycheck-highlighting-style nil) ;; Turn off wiggly lines
-  :config
-  (global-flycheck-mode))
+;; (use-package flycheck
+;;   :defer t
+;;   :init
+;;   (setq flycheck-highlighting-style nil) ;; Turn off wiggly lines
+;;   :config
+;;   (global-flycheck-mode))
 
 ;; Git
 (use-package magit

@@ -3,6 +3,8 @@ theme = "darcula"
 [editor]
 line-number = "relative"
 rulers = [ 80 ]
+color-modes = true
+cursorline = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -11,3 +13,12 @@ select = "underline"
 
 [editor.file-picker]
 hidden = false
+parents = false
+
+[editor.statusline]
+right = ["selections", "spacer", "spacer", "diagnostics", "spacer", "spacer", "position-percentage", "position"]
+
+[keys.normal]
+"F1" = "jump_backward"
+"F2" = "goto_definition"
+"g" = {"o" = "jump_backward"}
