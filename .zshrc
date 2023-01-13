@@ -36,10 +36,10 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 setopt COMBINING_CHARS
 
 alias ls='ls --color=auto'
-alias wt='wezterm'
 alias emacs="emacs -nw --no-desktop"  # Command line emacs
 alias proxy_tunnel="ssh -qTnN -D"     # Tunneling proxy
 alias watch="watch "                  # Make watch work with aliases
 alias dc="docker-compose"
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 eval "$(starship init zsh)"
