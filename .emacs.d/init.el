@@ -299,7 +299,7 @@
   (setq highlight-thing-delay-seconds 0.1)
   (setq highlight-thing-case-sensitive-p t)
   :custom-face
-  (hi-yellow ((t (:background "gray28")))))
+  (hi-yellow ((t (:background "gray28" :foreground nil)))))
 
 ;; Project navigation
 (use-package projectile
