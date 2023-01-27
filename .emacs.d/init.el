@@ -181,15 +181,6 @@
 (use-package ibuffer
   :bind (("C-x C-b" . ibuffer)))
 
-;; Make C-x +/-/0 zoom frames, not buffers
-(use-package zoom-frm
-  :ensure nil
-  :bind (:map ctl-x-map
-         ([(control ?+)] . zoom-in/out)
-         ([(control ?-)] . zoom-in/out)
-         ([(control ?=)] . zoom-in/out)
-         ([(control ?0)] . zoom-in/out)))
-
 ;; A function for dedicating windows to buffers
 (defun toggle-window-dedicated ()
   "Control whether or not Emacs is allowed to display another
@@ -265,6 +256,15 @@
   (mark-whole-buffer)
   (untabify (region-beginning) (region-end))
   (keyboard-quit))
+
+;; Make C-x +/-/0 zoom frames, not buffers
+(use-package zoom-frm
+  :ensure nil
+  :bind (:map ctl-x-map
+         ([(control ?+)] . zoom-in/out)
+         ([(control ?-)] . zoom-in/out)
+         ([(control ?=)] . zoom-in/out)
+         ([(control ?0)] . zoom-in/out)))
 
 (use-package org
   :ensure nil
